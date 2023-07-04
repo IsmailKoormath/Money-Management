@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/screens/Home_screen/widgets/bottom_navigation.dart';
-import 'package:money_management/screens/category_screen.dart/category_screen.dart';
+import 'package:money_management/screens/category_screen/add_category_popup.dart';
+import 'package:money_management/screens/category_screen/category_screen.dart';
 import 'package:money_management/screens/transaction_screen/transationscreen.dart';
 
 class Home_screen extends StatelessWidget {
@@ -35,6 +36,7 @@ class Home_screen extends StatelessWidget {
             print('add transaction');
           } else {
             print('add category');
+            showCategoryAddPopup(context);
           }
         },
         child: Icon(Icons.add),

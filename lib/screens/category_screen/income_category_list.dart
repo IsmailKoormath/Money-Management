@@ -12,7 +12,7 @@ class IncomeCategoryList extends StatelessWidget {
             title: Text('Income Category $index'),
             trailing: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
             ),
           ),
         );
