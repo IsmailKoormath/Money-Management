@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_management/models/category/category_model.dart';
 
@@ -9,6 +10,9 @@ abstract class CategoryDbFunction {
 }
 
 class CategoryDB implements CategoryDbFunction {
+  ValueNotifier<List<CategoryModel>> incomeCategory = ValueNotifier([]);
+  ValueNotifier<List<CategoryModel>> expenseCategory = ValueNotifier([]);
+
   @override
   Future<void> insertCategory(CategoryModel value) async {
     final _categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
