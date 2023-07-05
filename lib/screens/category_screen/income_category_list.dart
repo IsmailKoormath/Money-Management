@@ -12,11 +12,14 @@ class IncomeCategoryList extends StatelessWidget {
         builder: (BuildContext ctx, List<CategoryModel> newList, Widget? _) {
           return ListView.separated(
             itemBuilder: (ctx, index) {
+              final category = newList[index];
               return Card(
                 child: ListTile(
-                  title: Text('Income Category $index'),
+                  title: Text(category.name),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      CategoryDB.instance.deleteCategory(category.id);
+                    },
                     icon: const Icon(Icons.delete),
                   ),
                 ),
@@ -25,7 +28,7 @@ class IncomeCategoryList extends StatelessWidget {
             separatorBuilder: (ctx, index) {
               return const SizedBox(height: 10);
             },
-            itemCount: 50,
+            itemCount: newList.length,
           );
         });
   }
