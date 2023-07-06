@@ -28,6 +28,6 @@ class Transaction_Screen extends StatelessWidget {
             height: 10,
           );
         },
-        itemCount: 10);
+        itemCount: 30);
   }
 }
