@@ -18,6 +18,8 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
   CategoryType? _selectedCategoryType;
   CategoryModel? _selectedCategoryModel;
 
+  String? _categoryID;
+
   @override
   void initState() {
     _selectedCategoryType = CategoryType.income;
@@ -35,13 +37,13 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
           children: [
             TextFormField(
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'purpose',
               ),
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Amount',
               ),
             ),
@@ -64,7 +66,7 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
               icon: const Icon(Icons.calendar_today),
               label: Text(_selectedDate == null
                   ? 'Select Date '
-                  : _selectedDate!.toString()),
+                  : _selectedDate.toString()),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,38 +76,52 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
                     Radio(
                         value: CategoryType.income,
                         groupValue: _selectedCategoryType,
-                        onChanged: (selectedValue) {
+                        onChanged: (newValue) {
                           setState(() {
                             _selectedCategoryType = CategoryType.income;
+                            _categoryID = null;
                           });
                         }),
-                    Text('Income'),
+                    const Text('Income'),
                   ],
                 ),
                 Row(
                   children: [
                     Radio(
                         value: CategoryType.expense,
-                        groupValue: CategoryType.income,
-                        onChanged: (selectedValue) {
+                        groupValue: _selectedCategoryType,
+                        onChanged: (newValue) {
                           setState(() {
                             _selectedCategoryType = CategoryType.expense;
+                            _categoryID = null;
                           });
                         }),
-                    Text('Expense'),
+                    const Text('Expense'),
                   ],
                 ),
               ],
             ),
             DropdownButton(
                 hint: const Text('select Category'),
-                items: CategoryDB().expenseCategoryListListener.value.map((e) {
+                value: _categoryID,
+                items: (_selectedCategoryType == CategoryType.income
+                        ? CategoryDB().incomeCategoryListListener
+                        : CategoryDB().expenseCategoryListListener)
+                    .value
+                    .map((e) {
                   return DropdownMenuItem(
                     value: e.id,
                     child: Text(e.name),
+                    onTap: () {
+                      _selectedCategoryModel = e;
+                    },
                   );
                 }).toList(),
-                onChanged: (selectedCategory) {}),
+                onChanged: (selectedValue) {
+                  setState(() {
+                    _categoryID = selectedValue;
+                  });
+                }),
             ElevatedButton(onPressed: () {}, child: const Text('Submit')),
           ],
         ),
