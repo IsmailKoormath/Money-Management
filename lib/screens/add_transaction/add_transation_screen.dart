@@ -19,6 +19,12 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
   CategoryModel? _selectedCategoryModel;
 
   @override
+  void initState() {
+    _selectedCategoryType = CategoryType.income;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -67,8 +73,12 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
                   children: [
                     Radio(
                         value: CategoryType.income,
-                        groupValue: CategoryType.income,
-                        onChanged: (selectedValue) {}),
+                        groupValue: _selectedCategoryType,
+                        onChanged: (selectedValue) {
+                          setState(() {
+                            _selectedCategoryType = CategoryType.income;
+                          });
+                        }),
                     Text('Income'),
                   ],
                 ),
@@ -77,7 +87,11 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
                     Radio(
                         value: CategoryType.expense,
                         groupValue: CategoryType.income,
-                        onChanged: (selectedValue) {}),
+                        onChanged: (selectedValue) {
+                          setState(() {
+                            _selectedCategoryType = CategoryType.expense;
+                          });
+                        }),
                     Text('Expense'),
                   ],
                 ),
