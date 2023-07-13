@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_management/models/category/category_model.dart';
+import 'package:money_management/models/transaction/transaction_model.dart';
 import 'package:money_management/screens/Home_screen/home_screen.dart';
 import 'package:money_management/screens/add_transaction/add_transation_screen.dart';
 

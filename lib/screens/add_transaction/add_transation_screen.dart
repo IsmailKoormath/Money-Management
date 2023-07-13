@@ -3,6 +3,7 @@ import 'dart:js_util';
 import 'package:flutter/material.dart';
 import 'package:money_management/db/category/category_db.dart';
 import 'package:money_management/models/category/category_model.dart';
+import 'package:money_management/models/transaction/transaction_model.dart';
 
 class AddTranstactionScreen extends StatefulWidget {
   static const routeName = 'Add-transation';
@@ -19,6 +20,9 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
   CategoryModel? _selectedCategoryModel;
 
   String? _categoryID;
+
+  final _purposeTextEditingController = TextEditingController();
+  final _amountTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -126,6 +130,38 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
           ],
         ),
       )),
+    );
+  }
+
+  Future<void> addTransaction() async {
+    final _purposeText = _purposeTextEditingController.text;
+    final _amountText = _amountTextEditingController.text;
+
+    if (_purposeText.isEmpty) {
+      return;
+    }
+    if (_amountText.isEmpty) {
+      return;
+    }
+    if (_categoryID == null) {
+      return;
+    }
+    if (_selectedDate == null) {
+      return;
+    }
+    if (_selectedCategoryModel == null) {
+      return;
+    }
+    final _parsedAmount = double.tryParse(_amountText);
+    if (_parsedAmount == null) {
+      return;
+    }
+    TransactionModel(
+      amount: _parsedAmount,
+      purpose: _purposeText,
+      date: _selectedDate!,
+      type: _selectedCategoryType!,
+      category: _selectedCategoryModel!,
     );
   }
 }
