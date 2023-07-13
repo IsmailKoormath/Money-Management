@@ -156,7 +156,7 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
     if (_parsedAmount == null) {
       return;
     }
-    TransactionModel(
+    final _model = TransactionModel(
       amount: _parsedAmount,
       purpose: _purposeText,
       date: _selectedDate!,
