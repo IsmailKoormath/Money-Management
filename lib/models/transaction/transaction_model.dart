@@ -14,6 +14,8 @@ class TransactionModel {
   final CategoryType type;
   @HiveField(4)
   final CategoryModel category;
+  @HiveField(5)
+  String? id;
 
   TransactionModel({
     required this.purpose,
@@ -21,5 +23,7 @@ class TransactionModel {
     required this.date,
     required this.type,
     required this.category,
-  });
+  }) {
+    id = DateTime.now().millisecondsSinceEpoch.toString();
+  }
 }
