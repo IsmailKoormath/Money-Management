@@ -21,6 +21,18 @@ class Transaction_Screen extends StatelessWidget {
             itemBuilder: (context, index) {
               final _value = newList[index];
               return Slidable(
+                key: Key(_value.id!),
+                startActionPane: ActionPane(
+                  motion: ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (ctx) {
+                        TransactionDB.instance.deleteTransaction(_value.id!);
+                      },
+                      icon: Icons.delete,
+                    )
+                  ],
+                ),
                 child: Card(
                   elevation: 0,
                   child: ListTile(
