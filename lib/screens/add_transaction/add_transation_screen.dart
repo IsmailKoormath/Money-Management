@@ -2,6 +2,7 @@ import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:money_management/db/category/category_db.dart';
+import 'package:money_management/db/transactions/transaction_db.dart';
 import 'package:money_management/models/category/category_model.dart';
 import 'package:money_management/models/transaction/transaction_model.dart';
 
@@ -40,12 +41,14 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
+              controller: _purposeTextEditingController,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 hintText: 'purpose',
               ),
             ),
             TextFormField(
+              controller: _amountTextEditingController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 hintText: 'Amount',
@@ -126,7 +129,11 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
                     _categoryID = selectedValue;
                   });
                 }),
-            ElevatedButton(onPressed: () {}, child: const Text('Submit')),
+            ElevatedButton(
+                onPressed: () {
+                  addTransaction();
+                },
+                child: const Text('Submit')),
           ],
         ),
       )),
@@ -134,6 +141,7 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
   }
 
   Future<void> addTransaction() async {
+    print(_purposeTextEditingController.text);
     final _purposeText = _purposeTextEditingController.text;
     final _amountText = _amountTextEditingController.text;
 
@@ -163,5 +171,9 @@ class _AddTranstactionScreenState extends State<AddTranstactionScreen> {
       type: _selectedCategoryType!,
       category: _selectedCategoryModel!,
     );
+
+    await TransactionDB.instance.addtransaction(_model);
+    Navigator.of(context).pop();
+    TransactionDB.instance.refresh();
   }
 }
